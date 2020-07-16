@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 import "../../../css/RecipeSaver.css";
 
@@ -7,7 +7,7 @@ class RecipeSaverBodyTop extends Component {
     state = {};
     render() {
         return (
-            <div>
+            <div className="inputFieldsBodyTop">
                 <div className="columnBodyTop">
                     <Form>
                         <Form.Group>
@@ -34,17 +34,19 @@ class RecipeSaverBodyTop extends Component {
                     </Form>
                 </div>
                 <div className="columnBodyTop">
-                    <Form.Group>
-                        <Form.Label>Recipe Image</Form.Label>
-                        <Form.File id="recipeImage" />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Recipe Link</Form.Label>
-                        <Form.Control
-                            type="url"
-                            placeholder="Enter recipe link"
-                        />
-                    </Form.Group>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Recipe Image</Form.Label>
+                            <Form.File id="recipeImage" />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Recipe Link</Form.Label>
+                            <Form.Control
+                                type="url"
+                                placeholder="Enter recipe link"
+                            />
+                        </Form.Group>
+                    </Form>
                 </div>
             </div>
         );
