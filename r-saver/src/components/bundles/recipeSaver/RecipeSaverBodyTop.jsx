@@ -25,10 +25,10 @@ class RecipeSaverBodyTop extends Component {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Recipe Link</Form.Label>
+                            <Form.Label>Recipe Yield</Form.Label>
                             <Form.Control
-                                type="url"
-                                placeholder="Enter recipe link"
+                                type="number"
+                                placeholder="Enter recipe yield"
                             />
                         </Form.Group>
                     </Form>
@@ -39,15 +39,12 @@ class RecipeSaverBodyTop extends Component {
                         <Form.File id="recipeImage" />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Recipe Name</Form.Label>
+                        <Form.Label>Recipe Link</Form.Label>
                         <Form.Control
-                            type="text"
-                            placeholder="Enter recipe name"
+                            type="url"
+                            placeholder="Enter recipe link"
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Save
-                    </Button>
                 </div>
             </div>
         );
