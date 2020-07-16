@@ -1,0 +1,18 @@
+.column {
+    float: left;
+    width: 50%;
+    padding: 25px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.columnBodyTop {
+    float: left;
+    width: 50%;
+    padding: 25px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}

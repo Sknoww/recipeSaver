@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import NavBar from "./components/Navbar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Link,
+    Redirect,
+} from "react-router-dom";
+
+//Pages
+import Welcome from "./pages/Welcome";
+import RecipeSaver from "./pages/RecipeSaver";
+import Settings from "./pages/Settings";
+import NotFoundPage from "./pages/404";
+
+class App extends Component {
+    render() {
+        const navStyles = {
+            display: "flex",
+            justifyContent: "center",
+        };
+        const titleStyles = {
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#323232",
+            color: "#FF526A",
+            fontFamily: "Lucida Console",
+        };
+
+        return (
+            <Router>
+                <h1 style={titleStyles}>R-Saver</h1>
+                <NavBar style={navStyles} />
+                <Switch>
+                    <Route exact path="/" component={Welcome} />
+                    <Route exact path="/RecipeSaver" component={RecipeSaver} />
+                    <Route exact path="/Settings" component={Settings} />
+                    <Route exact path="/404" component={NotFoundPage} />
+                    <Redirect to="/404" />
+                </Switch>
+            </Router>
+        );
+    }
 }
 
 export default App;

@@ -1,0 +1,13 @@
+.navBarLink {
+    color: rgba(255, 82, 106, 0.8);
+    font-family: "Lucida Console", Courier, monospace;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 1px 3px;
+}
+
+.navBarLink:hover {
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: none;
+    font-family: "Lucida Console", Courier, monospace;
+}
