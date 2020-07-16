@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RecipeSaverBodyTop from "./RecipeSaverBodyTop";
+import RecipeSaverBodyBottom from "./RecipeSaverBodyBottom";
 import { Button } from "react-bootstrap";
 
 //Css
@@ -10,18 +11,11 @@ class RecipeSaverBody extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="row">
+                <div className="rowRecipeSaverTop">
                     <div className="columnTop">
                         <div className="header">{<RecipeSaverBodyTop />}</div>
-                        <div className="row">
-                            <div className="column">
-                                <h2>Column 1</h2>
-                                <p>Some text..</p>
-                            </div>
-                            <div className="column">
-                                <h2>Column 1</h2>
-                                <p>Some text..</p>
-                            </div>
+                        <div className="footer">
+                            {<RecipeSaverBodyBottom />}
                         </div>
                     </div>
                     <div className="columnSaveMenu">
