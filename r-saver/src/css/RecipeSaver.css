@@ -8,11 +8,31 @@
 .columnBodyTop {
     float: left;
     width: 50%;
+    padding: 15px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.columnTop {
+    float: left;
+    width: 90%;
     padding: 25px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.columnSaveMenu {
+    display: flex;
+    justify-content: right;
+    float: right;
+    width: 10%;
+    padding: 10px;
     height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .header {
     display: flex;
     justify-content: center;
+}
+
+.saveButton {
+    height: 50px;
 }

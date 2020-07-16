@@ -8,16 +8,27 @@ import "../../../css/welcome.css";
 class MainContainer extends Component {
     render() {
         const { header, body } = this.props;
-        const test = {
+        const containerHeader = {
             fontFamily: "Lucida Console",
             borderRadius: "15px",
             color: "#FF465F",
             backgroundColor: "#323232",
         };
+
+        const container = {
+            display: "flex",
+            justifyConten: "center",
+            width: "75rem",
+            height: "75rem",
+        };
+
         return (
-            <div>
-                <Card border="primary">
-                    <Card.Header style={test} className="welcomeHeader">
+            <div style={container}>
+                <Card border="primary" style={container}>
+                    <Card.Header
+                        style={containerHeader}
+                        className="welcomeHeader"
+                    >
                         {header}
                     </Card.Header>
                     <Card.Body>
