@@ -18,8 +18,8 @@ class MainContainer extends Component {
         const container = {
             display: "flex",
             justifyConten: "center",
-            width: "75rem",
-            height: "75rem",
+            width: "100%",
+            minHeight: "100%",
         };
 
         return (
