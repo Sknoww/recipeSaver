@@ -7,25 +7,22 @@ class ISInput extends Component {
         this.state = {};
     }
     render() {
-        const { type } = this.props;
-        const submit =
-            this.props.symbol === "+"
-                ? this.props.handleIncrementSubmit
-                : this.props.handleDecrementSubmit;
+        const { ingredients } = this.props;
+        const ingredientsArray = Array.from(ingredients);
         return (
-            <Form id={this.props.index} onSubmit={submit}>
+            <Form onSubmit={this.props.handleSubmit}>
                 <InputGroup className="mb-3">
                     <Form.Control
                         type="text"
-                        index={this.props.index}
-                        placeholder={"Enter " + type.toLowerCase()}
-                        name={type.toLowerCase() + "s"}
-                        onChange={this.props.handleInputChange}
-                        value={this.props.index}
+                        id="ingredient"
+                        name="ingredient"
+                        className="ingredient"
+                        placeholder={"Enter " + this.props.type}
+                        onChange={this.props.handleChange}
                     />
                     <InputGroup.Append>
                         <Button variant="outline-primary" type="submit">
-                            {this.props.symbol}
+                            +
                         </Button>
                     </InputGroup.Append>
                 </InputGroup>

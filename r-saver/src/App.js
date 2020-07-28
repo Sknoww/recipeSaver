@@ -13,6 +13,7 @@ import {
 import Welcome from "./pages/Welcome";
 import RecipeSaver from "./pages/RecipeSaver";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
 import NotFoundPage from "./pages/404";
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
                     <Route exact path="/" component={Welcome} />
                     <Route exact path="/RecipeSaver" component={RecipeSaver} />
                     <Route exact path="/Settings" component={Settings} />
+                    <Route exact path="/Login" component={Login} />
                     <Route exact path="/404" component={NotFoundPage} />
                     <Redirect to="/404" />
                 </Switch>

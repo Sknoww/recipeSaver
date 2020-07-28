@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import ISInput from "./IngredientStepInput";
+import ISDisplay from "./ISDisplay";
+import ISInput from "./ISInput";
 import { Form, InputGroup, Button } from "react-bootstrap";
 
 class RecipeSaverBodyBottomInputs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ingredients: {},
+            ingredients: [],
             steps: {},
             inputs: [],
         };
     }
 
-    handleIncrementSubmit = (event) => {
+    /* handleIncrementSubmit = (event) => {
         event.preventDefault();
         this.handleAppendInputs();
     };
@@ -48,13 +49,52 @@ class RecipeSaverBodyBottomInputs extends Component {
                 handleInputChange={this.handleInputChange}
                 handleIncrementSubmit={this.handleIncrementSubmit}
                 handleDecrementSubmit={this.handleDecrementSubmit}
+                handleChange={this.handleChange}
+                addIngredient={this.addIngredient}
+                subtractIngredient={this.subtractIngredient}
             />
         );
 
         this.setState({
             [inputs]: inputs,
         });
-    }
+    } */
+
+    addIngredient = (ingredient) => {
+        console.log("ADDING");
+        this.setState((prevState) => ({
+            ingredients: [...prevState.ingredients, { ingredient: ingredient }],
+        }));
+    };
+
+    subtractIngredient = (ingredientToFind) => {
+        const { ingredients } = this.state;
+        const removeIndex = ingredients
+            .map(function (ingredient) {
+                return ingredient.ingredient;
+            })
+            .indexOf(ingredientToFind);
+        ingredients.splice(removeIndex, 1);
+        this.setState((prevState) => ({
+            ingredients: ingredients,
+        }));
+    };
+
+    handleInputSubmit = (e) => {
+        e.preventDefault();
+        console.log(e.target.querySelector(".ingredient").value);
+        this.addIngredient(e.target.querySelector(".ingredient").value);
+        e.target.querySelector(".ingredient").value = "";
+    };
+
+    handleDisplaySubmit = (e) => {
+        e.preventDefault();
+        const ingredientToFind = e.target.querySelector(".displayedIngredient")
+            .value;
+        this.subtractIngredient(ingredientToFind);
+    };
+
+    handleChange = (e) => {};
 
     handleRemoveInputs(index) {
         let { inputs } = this.state;
@@ -76,18 +116,27 @@ class RecipeSaverBodyBottomInputs extends Component {
 
     render() {
         const { type } = this.props;
-        const { ingredients, inputs } = this.state;
+        const { ingredients } = this.state;
         return (
             <div className="ingredientAndStepInput">
                 <div>
                     <ISInput
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleInputSubmit}
+                        ingredients={ingredients}
+                        type={this.props.type}
+                        addIngredient={this.addIngredient}
+                    />
+                    <ISDisplay
+                        ingredients={ingredients}
                         symbol="+"
                         type={type}
-                        handleInputChange={this.handleInputChange}
-                        handleIncrementSubmit={this.handleIncrementSubmit}
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleDisplaySubmit}
+                        addIngredient={this.addIngredient}
+                        subtractIngredient={this.subtractIngredient}
                     />
                 </div>
-                <div>{inputs}</div>
             </div>
         );
     }
