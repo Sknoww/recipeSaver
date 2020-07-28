@@ -16,6 +16,9 @@ const NavBar = ({ totalCounters, style }) => {
             <a className="navBarLink m-2" href="/Settings">
                 Settings{" "}
             </a>
+            <a className="navBarLink m-2" href="/Login">
+                Login{" "}
+            </a>
         </nav>
     );
 };

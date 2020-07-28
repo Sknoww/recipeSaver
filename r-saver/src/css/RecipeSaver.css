@@ -1,22 +1,28 @@
 .column {
+    display: flex;
     float: left;
     width: 50%;
+    height: auto;
     padding: 25px;
-    height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .columnBodyTop {
-    float: left;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     width: 50%;
+    height: auto;
     padding: 15px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    border-color: red;
 }
 
 .columnTop {
+    display: flex;
+    flex-direction: column;
     float: left;
     width: 85%;
+    height: auto;
     padding: 25px;
-    height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .columnSaveMenu {
@@ -24,36 +30,42 @@
     justify-content: right;
     float: right;
     width: 15%;
+    height: auto;
     padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .rowRecipeSaverTop {
     display: flex;
     justify-content: right;
     width: 90%;
+    height: auto;
+    height: 100%;
 }
 
 .inputFieldsBodyTop {
     display: flex;
     justify-content: right;
+    flex-direction: row;
     width: 100%;
+    height: 100%;
 }
 
 .inputFieldsBodyBottom {
     display: flex;
-    justify-content: right;
     width: 100%;
+    padding-top: 0%;
 }
 
 .header {
     display: flex;
     justify-content: center;
+    height: 50%;
 }
 
 .footer {
     display: flex;
     justify-content: center;
+    height: 50%;
 }
 
 .saveButton {

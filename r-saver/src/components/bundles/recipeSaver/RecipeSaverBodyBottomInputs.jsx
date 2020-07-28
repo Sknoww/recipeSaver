@@ -1,116 +1,143 @@
 import React, { Component } from "react";
-import { FormControl, InputGroup, Button } from "react-bootstrap";
+import ISDisplay from "./ISDisplay";
+import ISInput from "./ISInput";
+import { Form, InputGroup, Button } from "react-bootstrap";
 
 class RecipeSaverBodyBottomInputs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            numIngredients: 1,
-            numSteps: 1,
+            ingredients: [],
+            steps: {},
+            inputs: [],
         };
-        this.handleIngredientClick = this.handleIngredientClick.bind(this);
-        this.handleStepClick = this.handleStepClick.bind(this);
-        this.generateIngredientInput = this.generateInputs.bind(this);
     }
 
-    handleIngredientClick() {
-        const { numIngredients } = this.state;
-        this.setState({ numIngredients: numIngredients + 1 });
-        this.generateInputs(this.props.type, this.state.numIngredients);
-    }
+    /* handleIncrementSubmit = (event) => {
+        event.preventDefault();
+        this.handleAppendInputs();
+    };
 
-    handleStepClick() {
-        const { numSteps } = this.state;
-        this.setState({ numSteps: numSteps + 1 });
-        this.generateInputs(this.props.type, this.state.numSteps);
-    }
+    handleDecrementSubmit = (event) => {
+        event.preventDefault();
+        console.log(this.state.inputs);
+        this.handleRemoveInputs(event.target.id);
+    };
 
-    generateInputs(type, numInputs) {
-        let inputs = [];
-        if (numInputs === 1) {
-            inputs.push(
-                <InputGroup key={0} className="mb-3">
-                    <FormControl
-                        placeholder={type}
-                        aria-label={type}
-                        aria-describedby="basic-addon2"
-                    />
-                    <InputGroup.Append>
-                        <Button
-                            onClick={
-                                type === "Ingredient"
-                                    ? this.handleIngredientClick
-                                    : this.handleStepClick
-                            }
-                            variant="outline-primary"
-                        >
-                            +
-                        </Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            );
-        } else {
-            for (let i = 0; i < numInputs; i++) {
-                if (i === 0) {
-                    inputs = [
-                        <InputGroup key={i} className="mb-3">
-                            <FormControl
-                                placeholder={type}
-                                aria-label={type}
-                                aria-describedby="basic-addon2"
-                            />
-                        </InputGroup>,
-                    ];
-                } else if (i !== numInputs - 1) {
-                    inputs.push(
-                        <InputGroup key={i} className="mb-3">
-                            <FormControl
-                                placeholder={type}
-                                aria-label={type}
-                                aria-describedby="basic-addon2"
-                            />
-                        </InputGroup>
-                    );
-                } else {
-                    inputs.push(
-                        <InputGroup key={i} className="mb-3">
-                            <FormControl
-                                placeholder={type}
-                                aria-label={type}
-                                aria-describedby="basic-addon2"
-                            />
-                            <InputGroup.Append>
-                                <Button
-                                    onClick={
-                                        type === "Ingredient"
-                                            ? this.handleIngredientClick
-                                            : this.handleStepClick
-                                    }
-                                    variant="outline-primary"
-                                >
-                                    +
-                                </Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    );
-                }
-            }
+    handleInputChange = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    handleAppendInputs() {
+        const { type } = this.props;
+        let { inputs } = this.state;
+
+        let index = 0;
+        if (inputs.length != 0) {
+            index = Number(inputs[inputs.length - 1].key) + 1;
         }
-        return inputs;
-    }
+        inputs.push(
+            <ISInput
+                key={index}
+                symbol="-"
+                type={type}
+                index={index}
+                handleInputChange={this.handleInputChange}
+                handleIncrementSubmit={this.handleIncrementSubmit}
+                handleDecrementSubmit={this.handleDecrementSubmit}
+                handleChange={this.handleChange}
+                addIngredient={this.addIngredient}
+                subtractIngredient={this.subtractIngredient}
+            />
+        );
 
-    generateStepInput() {}
+        this.setState({
+            [inputs]: inputs,
+        });
+    } */
+
+    addIngredient = (ingredient) => {
+        console.log("ADDING");
+        this.setState((prevState) => ({
+            ingredients: [...prevState.ingredients, { ingredient: ingredient }],
+        }));
+    };
+
+    subtractIngredient = (ingredientToFind) => {
+        const { ingredients } = this.state;
+        const removeIndex = ingredients
+            .map(function (ingredient) {
+                return ingredient.ingredient;
+            })
+            .indexOf(ingredientToFind);
+        ingredients.splice(removeIndex, 1);
+        this.setState((prevState) => ({
+            ingredients: ingredients,
+        }));
+    };
+
+    handleInputSubmit = (e) => {
+        e.preventDefault();
+        console.log(e.target.querySelector(".ingredient").value);
+        this.addIngredient(e.target.querySelector(".ingredient").value);
+        e.target.querySelector(".ingredient").value = "";
+    };
+
+    handleDisplaySubmit = (e) => {
+        e.preventDefault();
+        const ingredientToFind = e.target.querySelector(".displayedIngredient")
+            .value;
+        this.subtractIngredient(ingredientToFind);
+    };
+
+    handleChange = (e) => {};
+
+    handleRemoveInputs(index) {
+        let { inputs } = this.state;
+        console.log("INDEX: " + index);
+        if (inputs.length === 1) {
+            this.setState({
+                [inputs]: [],
+            });
+        } else {
+            inputs.splice(index, 1);
+
+            console.log(inputs);
+            this.setState({
+                [inputs]: inputs,
+            });
+            this.handleAppendInputs();
+        }
+    }
 
     render() {
+        const { type } = this.props;
+        const { ingredients } = this.state;
         return (
-            <React.Fragment>
-                {this.generateInputs(
-                    this.props.type,
-                    this.props.type === "Ingredient"
-                        ? this.state.numIngredients
-                        : this.state.numSteps
-                )}
-            </React.Fragment>
+            <div className="ingredientAndStepInput">
+                <div>
+                    <ISInput
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleInputSubmit}
+                        ingredients={ingredients}
+                        type={this.props.type}
+                        addIngredient={this.addIngredient}
+                    />
+                    <ISDisplay
+                        ingredients={ingredients}
+                        symbol="+"
+                        type={type}
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleDisplaySubmit}
+                        addIngredient={this.addIngredient}
+                        subtractIngredient={this.subtractIngredient}
+                    />
+                </div>
+            </div>
         );
     }
 }
