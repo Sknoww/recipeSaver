@@ -1,26 +1,29 @@
 import React from "react";
-
+import { Nav, Navbar } from "react-bootstrap";
 // Css
 import "../css/navbar.css";
 
 // Stateless functional component
-const NavBar = ({ totalCounters, style }) => {
+const NavigationBar = ({ style, handleLoggedInNavBar }) => {
     return (
-        <nav style={style} className="navbar navbar-light bg-light">
-            <a className="navBarLink m-2" href="/">
-                Welcome{" "}
-            </a>
-            <a className="navBarLink m-2" href="/RecipeSaver">
-                Recipe Saver{" "}
-            </a>
-            <a className="navBarLink m-2" href="/Settings">
-                Settings{" "}
-            </a>
-            <a className="navBarLink m-2" href="/Login">
-                Login{" "}
-            </a>
-        </nav>
+        <Navbar style={style} variant="dark" bg="primary" expand="lg">
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse className="navLinksBar" id="basic-navbar-nav">
+                <Nav className="navLinksBar">
+                    <Nav.Link className="navBarLink" href="/">
+                        Welcome
+                    </Nav.Link>
+                    <Nav.Link className="navBarLink" href="/RecipeSaver">
+                        Recipe Saver
+                    </Nav.Link>
+                    <Nav.Link className="navBarLink" href="/Settings">
+                        Settings
+                    </Nav.Link>
+                    {handleLoggedInNavBar}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 };
 
-export default NavBar;
+export default NavigationBar;

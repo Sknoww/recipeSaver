@@ -1,65 +1,60 @@
 import React, { Component } from "react";
-import GoTrue from "gotrue-js";
-import { Form, Button } from "react-bootstrap";
-
-const auth = new GoTrue({
-    APIUrl: "https://optimistic-curie-a8810b.netlify.app/.netlify/identity",
-    audience: "",
-    setCookie: false,
-});
+import { Form, Button, Col } from "react-bootstrap";
+import SignUpModal from "./SignUpModal";
+//CSS
+import "../../../css/login.css";
 
 class LoginBody extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email: "",
-            password: "",
-        };
+        this.state = {};
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const data = this.state;
-        console.log(data);
-    };
-
-    handleInputChange = (event) => {
-        event.preventDefault();
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
-    };
-
     render() {
-        const { email } = this.state;
+        const { show } = this.props;
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <p>Email is: {email}</p>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        name="email"
-                        onChange={this.handleInputChange}
-                    ></Form.Control>
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Enter password"
-                        secureTextEntry={true}
-                        name="password"
-                        onChange={this.handleInputChange}
-                    ></Form.Control>
-                    <Form.Text className="text-muted"></Form.Text>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-            </Form>
+            <div className="loginBody">
+                <Col>
+                    <Form onSubmit={this.props.handleLogin}>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                name="email"
+                                className="loginEmail"
+                                onChange={this.props.handleChange}
+                            ></Form.Control>
+                            <Form.Text className="text-muted"></Form.Text>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Enter password"
+                                name="password"
+                                className="loginPassword"
+                                onChange={this.props.handleChange}
+                            ></Form.Control>
+                            <Form.Text className="text-muted"></Form.Text>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Login
+                        </Button>
+                    </Form>
+                </Col>
+                <br />
+                <Col>
+                    <p>Don't have an account?</p>
+                    <Button onClick={this.props.handleShow}>Sign Up!</Button>
+                    <SignUpModal
+                        show={show}
+                        handleChange={this.props.handleChange}
+                        handleLogin={this.props.handleLogin}
+                        handleSignUp={this.props.handleSignUp}
+                        handleClose={this.props.handleClose}
+                        errors={this.props.errors}
+                    />
+                </Col>
+            </div>
         );
     }
 }

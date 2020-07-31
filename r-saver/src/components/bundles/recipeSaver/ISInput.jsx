@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 class ISInput extends Component {
     constructor(props) {
@@ -7,8 +7,6 @@ class ISInput extends Component {
         this.state = {};
     }
     render() {
-        const { ingredients } = this.props;
-        const ingredientsArray = Array.from(ingredients);
         return (
             <Form onSubmit={this.props.handleSubmit}>
                 <InputGroup className="mb-3">
@@ -18,7 +16,6 @@ class ISInput extends Component {
                         name="ingredient"
                         className="ingredient"
                         placeholder={"Enter " + this.props.type}
-                        onChange={this.props.handleChange}
                     />
                     <InputGroup.Append>
                         <Button variant="outline-primary" type="submit">

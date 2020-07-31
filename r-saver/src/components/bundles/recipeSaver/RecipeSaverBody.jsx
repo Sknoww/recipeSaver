@@ -29,8 +29,13 @@ class RecipeSaverBody extends Component {
                         >
                             {<ColoredLine color="#ff526a" />}
                         </div>
-                        <div className="footer">
-                            {<RecipeSaverBodyBottom />}
+                        <div className="inputFieldsBodyBottom">
+                            <div className="columnBodyTop">
+                                <RecipeSaverBodyBottom type="Ingredient" />
+                            </div>
+                            <div className="columnBodyTop">
+                                <RecipeSaverBodyBottom type="Step" />
+                            </div>
                         </div>
                     </div>
                     <div className="columnSaveMenu">
