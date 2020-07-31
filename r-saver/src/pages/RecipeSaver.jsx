@@ -2,15 +2,18 @@ import React from "react";
 import MainContainer from "../components/bundles/containers/MainContainer";
 import RecipeSaverBody from "../components/bundles/recipeSaver/RecipeSaverBody";
 
+//CSS
+import "../css/RecipeSaver.css";
+
 const RecipeSaver = () => {
     return (
         <React.Fragment>
-            <main className="container">
+            <div className="container">
                 <MainContainer
                     header="Recipe Saver"
                     body={<RecipeSaverBody />}
                 />
-            </main>
+            </div>
         </React.Fragment>
     );
 };

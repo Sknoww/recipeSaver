@@ -15,16 +15,9 @@ class MainContainer extends Component {
             backgroundColor: "#323232",
         };
 
-        const container = {
-            display: "flex",
-            justifyConten: "center",
-            width: "100%",
-            minHeight: "100%",
-        };
-
         return (
-            <div style={container}>
-                <Card border="primary" style={container}>
+            <div>
+                <Card border="primary">
                     <Card.Header
                         style={containerHeader}
                         className="welcomeHeader"
