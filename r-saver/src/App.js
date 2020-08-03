@@ -75,7 +75,7 @@ class App extends Component {
             usersRecipes: usersRecipes,
         });
         const dbControls = new DatabaseControls(this.state.user);
-        await dbControls.updateUsersRecipes(this.state.ref, usersRecipes);
+        await dbControls.updateUsersRecipes(this.state.userRef, usersRecipes);
         localStorage.setItem("RECIPES", JSON.stringify(usersRecipes));
     }
 
