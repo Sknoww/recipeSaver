@@ -7,27 +7,50 @@ class ISDisplay extends Component {
         this.state = {};
     }
     render() {
-        const { ingredients } = this.props;
+        const { ingredients, steps } = this.props;
         const ingredientsArray = Array.from(ingredients);
-        return ingredientsArray.map((val, idx) => {
-            return (
-                <Form key={idx} onSubmit={this.props.handleSubmit}>
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            className="displayedIngredient"
-                            type="text"
-                            value={ingredientsArray[idx].ingredient}
-                            disabled={true}
-                        />
-                        <InputGroup.Append>
-                            <Button variant="outline-primary" type="submit">
-                                -
-                            </Button>
-                        </InputGroup.Append>
-                    </InputGroup>
-                </Form>
-            );
-        });
+        const stepsArray = Array.from(steps);
+        if (this.props.type === "Ingredient") {
+            return ingredientsArray.map((val, idx) => {
+                return (
+                    <Form key={idx} onSubmit={this.props.handleSubmit}>
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                className={this.props.type}
+                                type="text"
+                                value={ingredientsArray[idx].ingredient}
+                                disabled={true}
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-primary" type="submit">
+                                    -
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Form>
+                );
+            });
+        } else {
+            return stepsArray.map((val, idx) => {
+                return (
+                    <Form key={idx} onSubmit={this.props.handleSubmit}>
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                className={this.props.type}
+                                type="text"
+                                value={stepsArray[idx].step}
+                                disabled={true}
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-primary" type="submit">
+                                    -
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Form>
+                );
+            });
+        }
     }
 }
 

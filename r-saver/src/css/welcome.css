@@ -1,11 +1,45 @@
 .welcomeHeader {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: left;
     margin: 50px;
     font-size: xx-large;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 15px !important;
+    color: #ff465f;
+    background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
-.card {
+.saveButtonRS {
+    width: 12%;
+    height: 50px;
+    margin-left: 68%;
+}
+
+.loginButtonAndLabelRS {
     display: flex;
-    justify-content: center;
+    justify-content: right;
+    flex-direction: row;
+    width: 30%;
+    height: 50px;
+    margin-left: 50%;
+}
+
+.loginButtonLabelRS {
+    width: 50%;
+    padding: 3%;
+    font-size: 20px;
+}
+
+.loginButtonRS {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    height: 50px;
+}
+
+.logoutButtonDashboard {
+    width: 12%;
+    height: 50px;
+    margin-left: 72%;
 }

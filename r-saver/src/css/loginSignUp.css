@@ -1,0 +1,22 @@
+.modal-content {
+    background-color: rgba(255, 70, 95, 0.65) !important;
+}
+
+.signUpModal {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.modalLabel {
+    color: azure;
+}
+
+.loginBody {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 75%;
+}
+
+.inputLabel {
+    color: #ff465f;
+}

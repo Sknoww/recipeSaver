@@ -9,12 +9,15 @@ class ISInput extends Component {
     render() {
         return (
             <Form onSubmit={this.props.handleSubmit}>
+                <Form.Label style={{ color: "#ff465f" }}>
+                    {"Enter " + this.props.type + "s"}
+                </Form.Label>
                 <InputGroup className="mb-3">
                     <Form.Control
                         type="text"
-                        id="ingredient"
-                        name="ingredient"
-                        className="ingredient"
+                        name={this.props.type}
+                        onChange={this.props.handleChange}
+                        className={this.props.type.toLowerCase()}
                         placeholder={"Enter " + this.props.type}
                     />
                     <InputGroup.Append>

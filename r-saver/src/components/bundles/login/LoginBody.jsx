@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import SignUpModal from "./SignUpModal";
 //CSS
-import "../../../css/login.css";
+import "../../../css/loginSignUp.css";
 
 class LoginBody extends Component {
     constructor(props) {
@@ -17,7 +17,9 @@ class LoginBody extends Component {
                 <Col>
                     <Form onSubmit={this.props.handleLogin}>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label className="inputLabel">
+                                Email
+                            </Form.Label>
                             <Form.Control
                                 type="email"
                                 placeholder="Enter email"
@@ -26,7 +28,9 @@ class LoginBody extends Component {
                                 onChange={this.props.handleChange}
                             ></Form.Control>
                             <Form.Text className="text-muted"></Form.Text>
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label className="inputLabel">
+                                Password
+                            </Form.Label>
                             <Form.Control
                                 type="password"
                                 placeholder="Enter password"
@@ -43,7 +47,7 @@ class LoginBody extends Component {
                 </Col>
                 <br />
                 <Col>
-                    <p>Don't have an account?</p>
+                    <p className="inputLabel">Don't have an account?</p>
                     <Button onClick={this.props.handleShow}>Sign Up!</Button>
                     <SignUpModal
                         show={show}

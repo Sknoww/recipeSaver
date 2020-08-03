@@ -15,9 +15,12 @@ import GoTrue from "gotrue-js";
 import Welcome from "./pages/Welcome";
 import RecipeSaver from "./pages/RecipeSaver";
 import Settings from "./pages/Settings";
-import Login from "./pages/Login";
+import LoginSignUp from "./pages/LoginSignUp";
 import Dashboard from "./pages/Dashboard";
 import NotFoundPage from "./pages/404";
+
+//Utility
+import DatabaseControls from "./components/utility/DatabaseControls";
 
 const auth = new GoTrue({
     APIUrl: "https://optimistic-curie-a8810b.netlify.app/.netlify/identity",
@@ -31,26 +34,59 @@ class App extends Component {
         this.state = {
             userLoggedIn: false,
             user: {},
+            usersRecipes: [],
+            userRef: "",
             errors: "",
             show: false,
         };
-        this.handleUserUpdate = this.handleUserUpdate.bind(this);
+        this.handleUserLogin = this.handleUserLogin.bind(this);
+        this.handleRecipeUpdate = this.handleRecipeUpdate.bind(this);
         this.handleLoggedInNavBar = this.handleLoggedInNavBar.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    handleUserUpdate(user) {
+    async handleUserLogin(user) {
+        const dbControls = new DatabaseControls(user);
+        let recipes = [];
+        let ref = "";
+        try {
+            const userData = await dbControls.getRecipes();
+            recipes = userData.recipes;
+            ref = userData.ref;
+        } catch (error) {}
+
         this.setState({
             user: user,
             userLoggedIn: true,
+            usersRecipes: recipes,
+            userRef: ref,
         });
+
         localStorage.setItem("TOKEN", user.token.access_token);
+        localStorage.setItem("USER", JSON.stringify(this.state.user));
+        localStorage.setItem("RECIPES", JSON.stringify(recipes));
+        localStorage.setItem("REF", ref);
+    }
+
+    async handleRecipeUpdate(recipe) {
+        const { usersRecipes } = this.state;
+        usersRecipes.push(recipe);
+        this.setState({
+            usersRecipes: usersRecipes,
+        });
+        const dbControls = new DatabaseControls(this.state.user);
+        await dbControls.updateUsersRecipes(this.state.ref, usersRecipes);
+        localStorage.setItem("RECIPES", JSON.stringify(usersRecipes));
     }
 
     handleLogout() {
         this.setState({
             userLoggedIn: false,
+            user: {},
+            usersRecipes: [],
+            userRef: "",
         });
+        localStorage.clear();
     }
 
     handleLoggedInNavBar() {
@@ -70,15 +106,14 @@ class App extends Component {
         }
     }
 
-    componentDidUpdate() {
-        //console.log(this.state.userLoggedIn);
-    }
-
     componentDidMount() {
         if (localStorage.getItem("TOKEN") != null) {
             console.log("LOGGED IN");
             this.setState({
                 userLoggedIn: true,
+                user: auth.currentUser(),
+                usersRecipes: JSON.parse(localStorage.getItem("RECIPES")),
+                userRef: localStorage.getItem("REF"),
             });
         } else {
             console.log("LOGGED OUT");
@@ -89,34 +124,39 @@ class App extends Component {
     }
 
     render() {
-        const navStyles = {
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "20px",
-        };
-        const titleStyles = {
-            display: "flex",
-            justifyContent: "center",
-            backgroundColor: "#323232",
-            color: "#FF526A",
-            fontFamily: "Lucida Console",
-        };
-
+        //console.log(this.state);
         return (
             <div>
                 <Router>
                     <div>
-                        <h1 style={titleStyles}>R-Saver</h1>
-                        <NavigationBar
-                            style={navStyles}
-                            handleLoggedInNavBar={this.handleLoggedInNavBar()}
-                        />
+                        <div
+                            className="navBarStyle"
+                            style={{
+                                display: "flexbox",
+                                justifyContent: "left",
+                                width: "100%",
+                                paddingTop: "20px",
+                            }}
+                        >
+                            <NavigationBar
+                                handleLoggedInNavBar={this.handleLoggedInNavBar()}
+                            />
+                        </div>
                         <Switch>
                             <Route exact path="/" component={Welcome} />
                             <Route
                                 exact
                                 path={"/RecipeSaver"}
-                                component={RecipeSaver}
+                                render={(props) => (
+                                    <RecipeSaver
+                                        {...props}
+                                        handleRecipeUpdate={
+                                            this.handleRecipeUpdate
+                                        }
+                                        user={this.state.user}
+                                        userLoggedIn={this.state.userLoggedIn}
+                                    />
+                                )}
                             />
                             <Route
                                 exact
@@ -127,10 +167,10 @@ class App extends Component {
                                 exact
                                 path="/Login"
                                 render={(props) => (
-                                    <Login
+                                    <LoginSignUp
                                         {...props}
                                         auth={auth}
-                                        handleUserUpdate={this.handleUserUpdate}
+                                        handleUserLogin={this.handleUserLogin}
                                     />
                                 )}
                             />
@@ -141,6 +181,7 @@ class App extends Component {
                                     <Dashboard
                                         {...props}
                                         auth={auth}
+                                        user={this.state.user}
                                         handleLogout={this.handleLogout}
                                     />
                                 )}
