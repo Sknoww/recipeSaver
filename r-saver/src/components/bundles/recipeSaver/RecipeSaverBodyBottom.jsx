@@ -2,75 +2,110 @@ import React, { Component } from "react";
 import ISDisplay from "./ISDisplay";
 import ISInput from "./ISInput";
 
+//CSS
+import "../../../css/RecipeSaver.css";
+
 class RecipeSaverBodyBottom extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ingredients: [],
-            steps: {},
-            inputs: [],
+            steps: [],
         };
 
-        this.addIngredient = this.addIngredient.bind(this);
-        this.subtractIngredient = this.subtractIngredient.bind(this);
+        this.addIngredient = this.addItem.bind(this);
+        this.subtractIngredient = this.subtractItem.bind(this);
         this.handleInputSubmit = this.handleInputSubmit.bind(this);
         this.handleDisplaySubmit = this.handleDisplaySubmit.bind(this);
     }
 
-    addIngredient(ingredient) {
+    addItem(item) {
         console.log("ADDING");
-        this.setState((prevState) => ({
-            ingredients: [...prevState.ingredients, { ingredient: ingredient }],
-        }));
+        const { ingredients, steps } = this.state;
+        if (this.props.type === "Ingredient") {
+            ingredients.push({ ingredient: item });
+            this.setState({
+                ingredients: ingredients,
+            });
+        } else {
+            steps.push({ step: item });
+            this.setState({
+                steps: steps,
+            });
+        }
     }
 
-    subtractIngredient(ingredientToFind) {
-        const { ingredients } = this.state;
-        const removeIndex = ingredients
-            .map(function (ingredient) {
-                return ingredient.ingredient;
-            })
-            .indexOf(ingredientToFind);
-        ingredients.splice(removeIndex, 1);
-        this.setState((prevState) => ({
-            ingredients: ingredients,
-        }));
+    subtractItem(itemToFind) {
+        console.log("SUBTRACTING");
+        const { ingredients, steps } = this.state;
+        if (this.props.type === "Ingredient") {
+            const removeIndex = ingredients
+                .map(function (ingredient) {
+                    return ingredient.ingredient;
+                })
+                .indexOf(itemToFind);
+            ingredients.splice(removeIndex, 1);
+            this.setState((prevState) => ({
+                ingredients: ingredients,
+            }));
+        } else {
+            const removeIndex = steps
+                .map(function (step) {
+                    return step.step;
+                })
+                .indexOf(itemToFind);
+            steps.splice(removeIndex, 1);
+            this.setState((prevState) => ({
+                steps: steps,
+            }));
+        }
     }
 
     handleInputSubmit(e) {
         e.preventDefault();
-        console.log(e.target.querySelector(".ingredient").value);
-        this.addIngredient(e.target.querySelector(".ingredient").value);
-        e.target.querySelector(".ingredient").value = "";
+        this.addItem(
+            e.target.querySelector("." + this.props.type.toLowerCase()).value
+        );
+        this.props.handleChange(
+            this.props.type,
+            this.state.ingredients,
+            this.state.steps
+        );
+        e.target.querySelector("." + this.props.type.toLowerCase()).value = "";
     }
 
     handleDisplaySubmit(e) {
         e.preventDefault();
-        const ingredientToFind = e.target.querySelector(".displayedIngredient")
+        const ingredientToFind = e.target.querySelector("." + this.props.type)
             .value;
-        this.subtractIngredient(ingredientToFind);
+        this.subtractItem(ingredientToFind);
+        this.props.handleChange(
+            this.props.type,
+            this.state.ingredients,
+            this.state.steps
+        );
     }
 
     render() {
         const { type } = this.props;
-        const { ingredients } = this.state;
+        const { ingredients, steps } = this.state;
         return (
             <div className="ingredientAndStepInput">
-                <div>
-                    <ISInput
-                        handleSubmit={this.handleInputSubmit}
-                        ingredients={ingredients}
-                        type={type}
-                        addIngredient={this.addIngredient}
-                    />
-                    <ISDisplay
-                        ingredients={ingredients}
-                        symbol="+"
-                        handleSubmit={this.handleDisplaySubmit}
-                        addIngredient={this.addIngredient}
-                        subtractIngredient={this.subtractIngredient}
-                    />
-                </div>
+                <ISInput
+                    handleSubmit={this.handleInputSubmit}
+                    ingredients={ingredients}
+                    steps={steps}
+                    type={type}
+                    addIngredient={this.addItem}
+                />
+                <ISDisplay
+                    ingredients={ingredients}
+                    steps={steps}
+                    type={type}
+                    handleSubmit={this.handleDisplaySubmit}
+                    addIngredient={this.addItem}
+                    subtractIngredient={this.subtractItem}
+                />
             </div>
         );
     }

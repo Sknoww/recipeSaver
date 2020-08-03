@@ -27,8 +27,8 @@
 
 .columnSaveMenu {
     display: flex;
+    flex-direction: column;
     justify-content: right;
-    float: right;
     width: 15%;
     height: auto;
     padding: 10px;
@@ -36,10 +36,9 @@
 
 .rowRecipeSaverTop {
     display: flex;
-    justify-content: right;
+    flex-direction: column;
     width: 90%;
     height: auto;
-    height: 100%;
 }
 
 .inputFieldsBodyTop {
@@ -77,4 +76,20 @@
 
 .container {
     justify-content: center;
+}
+
+.inputLabel {
+    color: #ff465f;
+}
+
+.inputField {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.ingredientAndStepInput {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
 }

@@ -5,6 +5,7 @@
     border-width: 1px;
     box-shadow: 1px 3px;
     text-align: center !important;
+    margin: 2px;
     width: 100%;
 }
 
@@ -15,6 +16,10 @@
 }
 
 .navLinksBar {
-    text-align: center !important;
     width: 100%;
+}
+
+.navBarLogo {
+    height: 55px;
+    width: 42px;
 }

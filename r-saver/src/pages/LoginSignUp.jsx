@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import MainContainer from "../components/bundles/containers/MainContainer";
 import LoginBody from "../components/bundles/login/LoginBody";
+import DatabaseControls from "../components/utility/DatabaseControls";
 
-class Login extends Component {
+class LoginSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,12 +26,15 @@ class Login extends Component {
 
     handleSignUp(event) {
         event.preventDefault();
+        event.persist();
         const { email, password } = this.state;
         const { auth } = this.props;
         if (this.comparePasswords()) {
             auth.signup(email, password)
                 .then((response) => {
                     console.log("Confirmation email sent", response);
+                    const dbControls = new DatabaseControls();
+                    dbControls.createNewUsersDocument(email);
                     this.handleLogin(event);
                 })
                 .catch((error) => console.log("It's an error", error));
@@ -45,15 +49,11 @@ class Login extends Component {
 
     handleLogin(event) {
         event.preventDefault();
-        event.persist();
         const { email, password } = this.state;
         const { auth } = this.props;
         auth.login(email, password, true)
             .then((response) => {
-                console.log(
-                    "Success! Response: " + JSON.stringify({ response })
-                );
-                this.props.handleUserUpdate(auth.currentUser());
+                this.props.handleUserLogin(auth.currentUser());
                 this.props.history.push("/Dashboard");
             })
             .catch((error) =>
@@ -111,4 +111,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default LoginSignUp;
