@@ -27,9 +27,6 @@ const NavigationBar = ({ style, handleLoggedInNavBar }) => {
                     <Nav.Link className="navBarLink" href="/RecipeSaver">
                         Recipe Saver
                     </Nav.Link>
-                    <Nav.Link className="navBarLink" href="/Settings">
-                        Settings
-                    </Nav.Link>
                     {handleLoggedInNavBar}
                 </Nav>
             </Navbar.Collapse>
