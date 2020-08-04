@@ -10,6 +10,7 @@ class RecipeSaverBodyTop extends Component {
     }
 
     render() {
+        const { name, description, yieldAmount, link } = this.props;
         return (
             <div className="inputFieldsBodyTop">
                 <div className="columnBodyTop">
@@ -22,6 +23,7 @@ class RecipeSaverBodyTop extends Component {
                                 type="text"
                                 name="name"
                                 placeholder="Enter recipe name"
+                                value={name}
                                 onChange={this.props.handleChange}
                             />
                         </Form.Group>
@@ -33,6 +35,7 @@ class RecipeSaverBodyTop extends Component {
                                 type="text"
                                 name="description"
                                 placeholder="Enter recipe description"
+                                value={description}
                                 onChange={this.props.handleChange}
                             />
                         </Form.Group>
@@ -46,8 +49,9 @@ class RecipeSaverBodyTop extends Component {
                             </Form.Label>
                             <Form.Control
                                 type="number"
-                                name="yield"
+                                name="yieldAmount"
                                 placeholder="Enter recipe yield"
+                                value={yieldAmount}
                                 onChange={this.props.handleChange}
                             />
                         </Form.Group>
@@ -59,6 +63,7 @@ class RecipeSaverBodyTop extends Component {
                                 type="url"
                                 name="link"
                                 placeholder="Enter recipe link"
+                                value={link}
                                 onChange={this.props.handleChange}
                             />
                         </Form.Group>

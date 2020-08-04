@@ -1,0 +1,6 @@
+.navBarStyle {
+    display: flexbox;
+    justify-content: left;
+    width: 100%;
+    padding-top: 20px;
+}

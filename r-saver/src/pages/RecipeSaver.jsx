@@ -11,21 +11,40 @@ class RecipeSaver extends Component {
         this.state = {
             name: "",
             description: "",
-            yield: "",
+            yieldAmount: "",
             link: "",
+            currentIngredient: "",
             ingredients: [],
+            currentStep: "",
             steps: [],
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleUpdateIngredientsOrSteps = this.handleUpdateIngredientsOrSteps.bind(
-            this
-        );
+        this.handleAddItem = this.handleAddItem.bind(this);
+        this.handleSubtractItem = this.handleSubtractItem.bind(this);
     }
 
-    handleSubmit(event) {
-        this.props.handleRecipeUpdate(this.state);
+    handleSubmit() {
+        const recipe = {
+            name: this.state.name,
+            description: this.state.description,
+            yieldAmount: this.state.yieldAmount,
+            link: this.state.link,
+            ingredients: this.state.ingredients,
+            steps: this.state.steps,
+        };
+        this.props.handleRecipeUpdate(recipe);
+        this.setState({
+            name: "",
+            description: "",
+            yieldAmount: "",
+            link: "",
+            currentIngredient: "",
+            ingredients: [],
+            currentStep: "",
+            steps: [],
+        });
     }
 
     handleChange(event) {
@@ -34,17 +53,68 @@ class RecipeSaver extends Component {
         });
     }
 
-    handleUpdateIngredientsOrSteps(type, ingredients, steps) {
-        type === "Ingredient"
-            ? this.setState({
-                  [type.toLowerCase() + "s"]: ingredients,
-              })
-            : this.setState({
-                  [type.toLowerCase() + "s"]: steps,
-              });
+    handleAddItem(e) {
+        e.preventDefault();
+        const type = e.target.name;
+        console.log("ADDING");
+        const {
+            ingredients,
+            currentIngredient,
+            steps,
+            currentStep,
+        } = this.state;
+        if (type === "Ingredient") {
+            ingredients.push(currentIngredient);
+            this.setState({
+                ingredients: ingredients,
+            });
+        } else {
+            steps.push(currentStep);
+            this.setState({
+                steps: steps,
+            });
+        }
+        e.target.querySelector("." + type).value = "";
+    }
+
+    handleSubtractItem(e) {
+        e.preventDefault();
+        const type = e.target.name;
+        const itemToFind = e.target.querySelector("." + type).value;
+        console.log("SUBTRACTING");
+        const { ingredients, steps } = this.state;
+        if (type === "Ingredient") {
+            const removeIndex = ingredients
+                .map(function (ingredient) {
+                    return ingredient.ingredient;
+                })
+                .indexOf(itemToFind);
+            ingredients.splice(removeIndex, 1);
+            this.setState((prevState) => ({
+                ingredients: ingredients,
+            }));
+        } else {
+            const removeIndex = steps
+                .map(function (step) {
+                    return step.step;
+                })
+                .indexOf(itemToFind);
+            steps.splice(removeIndex, 1);
+            this.setState((prevState) => ({
+                steps: steps,
+            }));
+        }
     }
 
     render() {
+        const {
+            name,
+            description,
+            yieldAmount,
+            link,
+            ingredients,
+            steps,
+        } = this.state;
         return (
             <React.Fragment>
                 <div className="container">
@@ -55,12 +125,16 @@ class RecipeSaver extends Component {
                         userLoggedIn={this.props.userLoggedIn}
                         body={
                             <RecipeSaverBody
+                                name={name}
+                                description={description}
+                                yieldAmount={yieldAmount}
+                                link={link}
+                                ingredients={ingredients}
+                                steps={steps}
                                 userLoggedIn={this.props.userLoggedIn}
-                                handleSubmit={this.handleSubmit}
                                 handleChange={this.handleChange}
-                                handleUpdateIngredientsOrSteps={
-                                    this.handleUpdateIngredientsOrSteps
-                                }
+                                handleAddItem={this.handleAddItem}
+                                handleSubtractItem={this.handleSubtractItem}
                             />
                         }
                     />

@@ -12,9 +12,11 @@ class MainContainer extends Component {
         this.handleLoginReRoute = this.handleLoginReRoute.bind(this);
         this.handleHeaderButtons = this.handleHeaderButtons.bind(this);
     }
+
     handleLoginReRoute() {
         this.props.history.push("/Login");
     }
+
     handleHeaderButtons() {
         const { header, userLoggedIn } = this.props;
         if (header === "Recipe Saver" && userLoggedIn) {

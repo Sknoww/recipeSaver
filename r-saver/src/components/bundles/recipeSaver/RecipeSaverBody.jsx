@@ -5,21 +5,26 @@ import RecipeSaverBodyBottom from "./RecipeSaverBodyBottom";
 //Css
 import "../../../css/RecipeSaver.css";
 
-class RecipeSaverBody extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+        }}
+    />
+);
 
+class RecipeSaverBody extends Component {
     render() {
-        const ColoredLine = ({ color }) => (
-            <hr
-                style={{
-                    color: color,
-                    backgroundColor: color,
-                }}
-            />
-        );
+        const {
+            name,
+            description,
+            yieldAmount,
+            link,
+            ingredients,
+            steps,
+        } = this.props;
+
         if (this.props.userLoggedIn) {
             return (
                 <React.Fragment>
@@ -27,6 +32,10 @@ class RecipeSaverBody extends Component {
                         <div className="header">
                             {
                                 <RecipeSaverBodyTop
+                                    name={name}
+                                    description={description}
+                                    yieldAmount={yieldAmount}
+                                    link={link}
                                     handleChange={this.props.handleChange}
                                 />
                             }
@@ -36,18 +45,24 @@ class RecipeSaverBody extends Component {
                             <div className="columnBodyTop">
                                 <RecipeSaverBodyBottom
                                     type="Ingredient"
-                                    handleChange={
-                                        this.props
-                                            .handleUpdateIngredientsOrSteps
+                                    ingredients={ingredients}
+                                    steps={steps}
+                                    handleChange={this.props.handleChange}
+                                    handleAddItem={this.props.handleAddItem}
+                                    handleSubtractItem={
+                                        this.props.handleSubtractItem
                                     }
                                 />
                             </div>
                             <div className="columnBodyTop">
                                 <RecipeSaverBodyBottom
                                     type="Step"
-                                    handleChange={
-                                        this.props
-                                            .handleUpdateIngredientsOrSteps
+                                    ingredients={ingredients}
+                                    steps={steps}
+                                    handleChange={this.props.handleChange}
+                                    handleAddItem={this.props.handleAddItem}
+                                    handleSubtractItem={
+                                        this.props.handleSubtractItem
                                     }
                                 />
                             </div>
@@ -56,11 +71,7 @@ class RecipeSaverBody extends Component {
                 </React.Fragment>
             );
         } else {
-            return (
-                <React.Fragment>
-                    <div></div>
-                </React.Fragment>
-            );
+            return <div></div>;
         }
     }
 }

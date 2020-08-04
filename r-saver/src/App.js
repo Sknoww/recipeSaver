@@ -41,8 +41,8 @@ class App extends Component {
         };
         this.handleUserLogin = this.handleUserLogin.bind(this);
         this.handleRecipeUpdate = this.handleRecipeUpdate.bind(this);
-        this.handleLoggedInNavBar = this.handleLoggedInNavBar.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleLoggedInNavBar = this.handleLoggedInNavBar.bind(this);
     }
 
     async handleUserLogin(user) {
@@ -62,8 +62,6 @@ class App extends Component {
             userRef: ref,
         });
 
-        localStorage.setItem("TOKEN", user.token.access_token);
-        localStorage.setItem("USER", JSON.stringify(this.state.user));
         localStorage.setItem("RECIPES", JSON.stringify(recipes));
         localStorage.setItem("REF", ref);
     }
@@ -107,7 +105,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        if (localStorage.getItem("TOKEN") != null) {
+        if (localStorage.getItem("RECIPES") != null) {
             console.log("LOGGED IN");
             this.setState({
                 userLoggedIn: true,
@@ -124,20 +122,11 @@ class App extends Component {
     }
 
     render() {
-        //console.log(this.state);
         return (
             <div>
                 <Router>
                     <div>
-                        <div
-                            className="navBarStyle"
-                            style={{
-                                display: "flexbox",
-                                justifyContent: "left",
-                                width: "100%",
-                                paddingTop: "20px",
-                            }}
-                        >
+                        <div className="navBarStyle">
                             <NavigationBar
                                 handleLoggedInNavBar={this.handleLoggedInNavBar()}
                             />
