@@ -23,7 +23,7 @@ import NotFoundPage from "./pages/404";
 import DatabaseControls from "./components/utility/DatabaseControls";
 
 const auth = new GoTrue({
-    APIUrl: "https://optimistic-curie-a8810b.netlify.app/.netlify/identity",
+    APIUrl: "https://snowsrecipesaver.netlify.app/.netlify/identity",
     audience: "",
     setCookie: false,
 });
