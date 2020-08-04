@@ -5,7 +5,7 @@
     margin: 20px;
     margin-bottom: 0px;
     height: 45%;
-    font-size: x-large;
+    font-size: large;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     border-radius: 15px !important;
     color: #ff465f;
@@ -52,6 +52,7 @@
 
 .loginButtonLabelRS {
     padding-top: 3%;
+    padding-right: 10%;
     font-size: 14px;
 }
 
