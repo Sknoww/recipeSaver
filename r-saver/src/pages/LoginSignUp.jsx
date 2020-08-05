@@ -51,7 +51,6 @@ class LoginSignUp extends Component {
 
     handleLogin(event) {
         event.preventDefault();
-        console.log(event);
         const { email, password } = this.state;
         const { auth } = this.props;
         auth.login(email, password, true)
