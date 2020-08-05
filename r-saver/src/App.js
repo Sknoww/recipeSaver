@@ -7,7 +7,6 @@ import {
     Route,
     Switch,
     Redirect,
-    useParams,
 } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import GoTrue from "gotrue-js";
@@ -177,8 +176,11 @@ class App extends Component {
                                 )}
                             />
                             <Route
-                                path="/passwordRecovery"
-                                component={PasswordReset}
+                                exact
+                                path="/passwordRecovery/:token"
+                                render={(props) => (
+                                    <PasswordReset {...props} auth={auth} />
+                                )}
                             />
                             <Route exact path="/404" component={NotFoundPage} />
                             <Redirect to="/404" />
