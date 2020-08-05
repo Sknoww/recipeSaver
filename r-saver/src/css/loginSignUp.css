@@ -20,3 +20,12 @@
 .inputLabel {
     color: #ff465f;
 }
+
+.forgotPasswordButton {
+    color: #ff465f !important;
+    background: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+}

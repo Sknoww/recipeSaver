@@ -13,15 +13,17 @@ class LoginSignUp extends Component {
             passwordConfirmation: "",
             user: {},
             errors: "",
-            show: false,
+            showSignUp: false,
+            showForgotPassword: false,
             userLoggedin: this.props.userLoggedin,
         };
         this.handleLogin = this.handleLogin.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.comparePasswords = this.comparePasswords.bind(this);
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.handleSignUpShow = this.handleSignUpShow.bind(this);
+        this.handleSignUpClose = this.handleSignUpClose.bind(this);
     }
 
     handleSignUp(event) {
@@ -39,7 +41,7 @@ class LoginSignUp extends Component {
                 })
                 .catch((error) => console.log("It's an error", error));
 
-            this.handleClose();
+            this.handleSignUpClose();
         } else {
             this.setState({
                 errors: "Passwords do not match",
@@ -49,6 +51,7 @@ class LoginSignUp extends Component {
 
     handleLogin(event) {
         event.preventDefault();
+        console.log(event);
         const { email, password } = this.state;
         const { auth } = this.props;
         auth.login(email, password, true)
@@ -73,20 +76,45 @@ class LoginSignUp extends Component {
         });
     }
 
-    handleShow = () => {
+    handleSignUpShow = () => {
         this.setState({
-            show: true,
+            showSignUp: true,
         });
     };
 
-    handleClose = () => {
+    handleSignUpClose = () => {
         this.setState({
-            show: false,
+            showSignUp: false,
         });
     };
+
+    handleForgotPasswordShow = () => {
+        this.setState({
+            showForgotPassword: true,
+        });
+    };
+
+    handleForgotPasswordClose = () => {
+        this.setState({
+            showForgotPassword: false,
+        });
+    };
+
+    handlePasswordReset(e) {
+        e.preventDefault();
+        const { auth } = this.props;
+        auth.requestPasswordRecovery(this.state.email)
+            .then((response) => {
+                console.log("Recovery email sent", { response });
+            })
+            .catch((error) =>
+                console.log("Error sending recovery mail: %o", error)
+            );
+        this.handleForgotPasswordClose();
+    }
 
     render() {
-        const { show, errors } = this.state;
+        const { showSignUp, showForgotPassword, errors } = this.state;
         return (
             <React.Fragment>
                 <main className="container">
@@ -98,10 +126,18 @@ class LoginSignUp extends Component {
                                 handleChange={this.handleChange}
                                 handleLogin={this.handleLogin}
                                 handleSignUp={this.handleSignUp}
-                                handleShow={this.handleShow}
-                                handleClose={this.handleClose}
+                                handleSignUpShow={this.handleSignUpShow}
+                                handleSignUpClose={this.handleSignUpClose}
+                                handlePasswordReset={this.handlePasswordReset}
+                                handleForgotPasswordShow={
+                                    this.handleForgotPasswordShow
+                                }
+                                handleForgotPasswordClose={
+                                    this.handleForgotPasswordClose
+                                }
                                 errors={errors}
-                                show={show}
+                                showSignUp={showSignUp}
+                                showForgotPassword={showForgotPassword}
                             />
                         }
                     />
