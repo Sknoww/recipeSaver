@@ -7,6 +7,7 @@ import {
     Route,
     Switch,
     Redirect,
+    useParams,
 } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import GoTrue from "gotrue-js";
@@ -21,6 +22,7 @@ import NotFoundPage from "./pages/404";
 
 //Utility
 import DatabaseControls from "./components/utility/DatabaseControls";
+import PasswordReset from "./pages/PasswordReset";
 
 const auth = new GoTrue({
     APIUrl: "https://snowsrecipesaver.netlify.app/.netlify/identity",
@@ -37,7 +39,6 @@ class App extends Component {
             usersRecipes: [],
             userRef: "",
             errors: "",
-            show: false,
         };
         this.handleUserLogin = this.handleUserLogin.bind(this);
         this.handleRecipeUpdate = this.handleRecipeUpdate.bind(this);
@@ -174,6 +175,10 @@ class App extends Component {
                                         handleLogout={this.handleLogout}
                                     />
                                 )}
+                            />
+                            <Route
+                                path="/passwordRecovery"
+                                component={PasswordReset}
                             />
                             <Route exact path="/404" component={NotFoundPage} />
                             <Redirect to="/404" />

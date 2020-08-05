@@ -3,6 +3,7 @@ import { Form, Button, Col } from "react-bootstrap";
 import SignUpModal from "./SignUpModal";
 //CSS
 import "../../../css/loginSignUp.css";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 class LoginBody extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class LoginBody extends Component {
     }
 
     render() {
-        const { show } = this.props;
+        const { showSignUp, showForgotPassword } = this.props;
         return (
             <div className="loginBody">
                 <Col>
@@ -40,21 +41,40 @@ class LoginBody extends Component {
                             ></Form.Control>
                             <Form.Text className="text-muted"></Form.Text>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button
+                            style={{ marginBottom: "5px" }}
+                            variant="primary"
+                            type="submit"
+                        >
                             Login
                         </Button>
                     </Form>
+                    <div>
+                        <Button
+                            className="forgotPasswordButton"
+                            onClick={this.props.handleForgotPasswordShow}
+                        >
+                            Forgot Password?
+                        </Button>
+                        <ForgotPasswordModal
+                            show={showForgotPassword}
+                            handleChange={this.props.handleChange}
+                            handleClose={this.props.handleForgotPasswordClose}
+                            handlePasswordReset={this.props.handlePasswordReset}
+                        />
+                    </div>
                 </Col>
                 <br />
                 <Col>
                     <p className="inputLabel">Don't have an account?</p>
-                    <Button onClick={this.props.handleShow}>Sign Up!</Button>
+                    <Button onClick={this.props.handleSignUpShow}>
+                        Sign Up!
+                    </Button>
                     <SignUpModal
-                        show={show}
+                        show={showSignUp}
                         handleChange={this.props.handleChange}
-                        handleLogin={this.props.handleLogin}
                         handleSignUp={this.props.handleSignUp}
-                        handleClose={this.props.handleClose}
+                        handleClose={this.props.handleSignUpClose}
                         errors={this.props.errors}
                     />
                 </Col>
