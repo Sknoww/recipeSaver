@@ -43,8 +43,19 @@ class SignUpModal extends Component {
                                 onChange={this.props.handleChange}
                                 required
                             ></Form.Control>
+                            <Form.Label className="modalLabel">
+                                Confirm Email
+                            </Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Confirm Email"
+                                name="emailConfirmation"
+                                className="loginEmail"
+                                onChange={this.props.handleChange}
+                                required
+                            ></Form.Control>
                             <Form.Text className="modalLabel">
-                                We'll never share your email with anyone else.
+                                {this.props.errors.email}
                             </Form.Text>
                             <Form.Label className="modalLabel">
                                 Password
@@ -70,7 +81,7 @@ class SignUpModal extends Component {
                                 required
                             ></Form.Control>
                             <Form.Text className="modalLabel">
-                                {this.props.errors}
+                                {this.props.errors.password}
                             </Form.Text>
                         </Form.Group>
                         <Button variant="secondary" type="submit">

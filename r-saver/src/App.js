@@ -123,7 +123,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="App">
                 <Router>
                     <div>
                         <div className="navBarStyle">
@@ -171,6 +171,7 @@ class App extends Component {
                                         {...props}
                                         auth={auth}
                                         user={this.state.user}
+                                        recipes={this.state.usersRecipes}
                                         handleLogout={this.handleLogout}
                                     />
                                 )}

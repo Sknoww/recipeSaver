@@ -4,6 +4,7 @@ import SignUpModal from "./SignUpModal";
 //CSS
 import "../../../css/loginSignUp.css";
 import ForgotPasswordModal from "./ForgotPasswordModal";
+import PopupModal from "../../utility/PopModal";
 
 class LoginBody extends Component {
     constructor(props) {
@@ -41,21 +42,30 @@ class LoginBody extends Component {
                             ></Form.Control>
                             <Form.Text className="text-muted"></Form.Text>
                         </Form.Group>
-                        <Button
-                            style={{ marginBottom: "5px" }}
-                            variant="primary"
-                            type="submit"
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                float: "left",
+                            }}
                         >
-                            Login
-                        </Button>
+                            <Button
+                                className="forgotPasswordButton"
+                                type="button"
+                                onClick={this.props.handleForgotPasswordShow}
+                            >
+                                Forgot Password?
+                            </Button>
+                            <Button
+                                style={{ marginTop: "10px", width: "75px" }}
+                                variant="primary"
+                                type="submit"
+                            >
+                                Login
+                            </Button>
+                        </div>
                     </Form>
                     <div>
-                        <Button
-                            className="forgotPasswordButton"
-                            onClick={this.props.handleForgotPasswordShow}
-                        >
-                            Forgot Password?
-                        </Button>
                         <ForgotPasswordModal
                             show={showForgotPassword}
                             handleChange={this.props.handleChange}
@@ -78,6 +88,11 @@ class LoginBody extends Component {
                         errors={this.props.errors}
                     />
                 </Col>
+                <PopupModal
+                    show={this.props.showPopup}
+                    handleClose={this.props.handlePopupClose}
+                    content="An email has been sent to reset your password!"
+                />
             </div>
         );
     }
