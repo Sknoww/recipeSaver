@@ -109,6 +109,8 @@
 @media (min-width: 1080px) {
     .dashboardRecipes {
         color: white;
+        font-size: xx-large;
+        font-weight: lighter;
         padding: 0 !important;
     }
 

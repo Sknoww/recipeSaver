@@ -3,7 +3,6 @@ import { Row } from "react-bootstrap";
 
 //CSS
 import "../../../css/dashboard.css";
-import FullRecipeModal from "./FullRecipeModal";
 import RecipeTable from "./RecipeTable";
 
 class DashboardBody extends Component {

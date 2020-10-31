@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import FullRecipeModal from "../dashboard/FullRecipeModal";
 //CSS
-import recipeTable from "../../../css/recipeTable.css";
+import "../../../css/recipeTable.css";
 
 class RecipeTable extends Component {
     constructor(props) {
@@ -70,20 +70,23 @@ class RecipeTable extends Component {
     renderRecipe(recipe) {
         const clickCallback = () => this.handleRowClick(recipe.name);
         const itemRows = [
-            <div className="tablePreviewContainer">
-                <li
+            <tr
+                className="tablePreviewContainer"
+                key={"row-data-" + recipe.name}
+            >
+                <td
                     className="recipePreviewInTable"
                     onClick={clickCallback}
                     key={"row-data-" + recipe.name}
                 >
                     {recipe.name}
-                </li>
-            </div>,
+                </td>
+            </tr>,
         ];
 
         if (this.state.expandedRow === recipe.name) {
             itemRows.push(
-                <div
+                <tr
                     className="expandedRecipe"
                     key={"row-expanded-" + recipe.name}
                 >
@@ -121,7 +124,7 @@ class RecipeTable extends Component {
                         handleClose={this.props.handleClose}
                         recipe={recipe}
                     />
-                </div>
+                </tr>
             );
         }
 
@@ -140,7 +143,11 @@ class RecipeTable extends Component {
                 className="recipeTable"
                 style={{ display: "flex", flexDirection: "column" }}
             >
-                <h2 className="dashboardRecipes">My Recipes</h2>
+                <thead>
+                    <tr>
+                        <th className="dashboardRecipes">My Recipes</th>
+                    </tr>
+                </thead>
 
                 <tbody className="recipeTableBody">{allItemRows}</tbody>
             </table>

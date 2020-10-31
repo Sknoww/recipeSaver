@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Button, Modal, Row, Col } from "react-bootstrap";
 
 //CSS
 import "../../../css/fullRecipeModal.css";
