@@ -40,7 +40,7 @@ class MainContainer extends Component {
                     </Button>
                 </div>
             );
-        } else if (header === "Dashboard") {
+        } else if (header.includes("Dashboard")) {
             return (
                 <Button
                     className="logoutButtonDashboard"

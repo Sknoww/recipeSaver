@@ -9,53 +9,85 @@ class LoginSignUp extends Component {
         this.state = {
             name: "",
             email: "",
+            emailConfirmation: "",
             password: "",
             passwordConfirmation: "",
             user: {},
-            errors: "",
+            errors: { email: "", password: "" },
             showSignUp: false,
             showForgotPassword: false,
+            showPopup: false,
             userLoggedin: this.props.userLoggedin,
         };
         this.handleLogin = this.handleLogin.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleUserUpdate = this.handleUserUpdate.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handlePasswordReset = this.handlePasswordReset.bind(this);
         this.comparePasswords = this.comparePasswords.bind(this);
+        this.compareEmails = this.compareEmails.bind(this);
         this.handleSignUpShow = this.handleSignUpShow.bind(this);
         this.handleSignUpClose = this.handleSignUpClose.bind(this);
     }
 
-    handleSignUp(event) {
+    async handleSignUp(event) {
         event.preventDefault();
         event.persist();
-        const { email, password } = this.state;
+        const { email, password, errors } = this.state;
         const { auth } = this.props;
-        if (this.comparePasswords()) {
-            auth.signup(email, password)
+        if (this.comparePasswords() && this.compareEmails()) {
+            await auth
+                .signup(email, password)
                 .then((response) => {
-                    console.log("Confirmation email sent", response);
                     const dbControls = new DatabaseControls();
                     dbControls.createNewUsersDocument(email);
-                    this.handleLogin(event);
+                    this.handleLogin(event, true);
                 })
                 .catch((error) => console.log("It's an error", error));
 
             this.handleSignUpClose();
         } else {
+            if (!this.comparePasswords()) {
+                errors["password"] = "Passwords do not match";
+            } else {
+                errors["password"] = "";
+            }
+            if (!this.compareEmails()) {
+                errors["email"] = "Emails do not match";
+            } else {
+                errors["email"] = "";
+            }
             this.setState({
-                errors: "Passwords do not match",
+                errors: errors,
             });
         }
     }
 
-    handleLogin(event) {
+    async handleUserUpdate(user) {
+        await user
+            .update({
+                data: {
+                    full_name: this.state.name,
+                },
+            })
+            .catch((error) => {
+                console.log("Failed to update user: %o", error);
+                throw error;
+            });
+    }
+
+    async handleLogin(event, newUser) {
         event.preventDefault();
         const { email, password } = this.state;
         const { auth } = this.props;
-        auth.login(email, password, true)
+        await auth
+            .login(email, password, true)
             .then((response) => {
-                this.props.handleUserLogin(auth.currentUser());
+                const user = auth.currentUser();
+                if (newUser) {
+                    this.handleUserUpdate(user);
+                }
+                this.props.handleUserLogin(user);
                 this.props.history.push("/Dashboard");
             })
             .catch((error) =>
@@ -63,9 +95,28 @@ class LoginSignUp extends Component {
             );
     }
 
+    handlePasswordReset(e) {
+        e.preventDefault();
+        const { auth } = this.props;
+        auth.requestPasswordRecovery(this.state.email)
+            .then((response) => {
+                console.log("Recovery email sent", { response });
+                this.handleForgotPasswordClose();
+                this.handlePopupShow();
+            })
+            .catch((error) =>
+                console.log("Error sending recovery mail: %o", error)
+            );
+    }
+
     comparePasswords() {
         const { password, passwordConfirmation } = this.state;
         return password === passwordConfirmation;
+    }
+
+    compareEmails() {
+        const { email, emailConfirmation } = this.state;
+        return email === emailConfirmation;
     }
 
     handleChange(event) {
@@ -99,21 +150,25 @@ class LoginSignUp extends Component {
         });
     };
 
-    handlePasswordReset(e) {
-        e.preventDefault();
-        const { auth } = this.props;
-        auth.requestPasswordRecovery(this.state.email)
-            .then((response) => {
-                console.log("Recovery email sent", { response });
-            })
-            .catch((error) =>
-                console.log("Error sending recovery mail: %o", error)
-            );
-        this.handleForgotPasswordClose();
-    }
+    handlePopupShow = () => {
+        this.setState({
+            showPopup: true,
+        });
+    };
+
+    handlePopupClose = () => {
+        this.setState({
+            showPopup: false,
+        });
+    };
 
     render() {
-        const { showSignUp, showForgotPassword, errors } = this.state;
+        const {
+            showSignUp,
+            showForgotPassword,
+            showPopup,
+            errors,
+        } = this.state;
         return (
             <React.Fragment>
                 <main className="container">
@@ -134,9 +189,11 @@ class LoginSignUp extends Component {
                                 handleForgotPasswordClose={
                                     this.handleForgotPasswordClose
                                 }
+                                handlePopupClose={this.handlePopupClose}
                                 errors={errors}
                                 showSignUp={showSignUp}
                                 showForgotPassword={showForgotPassword}
+                                showPopup={showPopup}
                             />
                         }
                     />
