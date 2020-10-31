@@ -6,10 +6,6 @@ import "../../../css/dashboard.css";
 import RecipeTable from "./RecipeTable";
 
 class DashboardBody extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="dashboardBody">
